@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Still Pond - for Aya</title>
+<link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&family=Fraunces:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fff4ea;--ink:#2d3a2e;--sage:#a9cdbd;--pink:#f9c6d6;--deep:#1e3a2a}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:Sniglet,'Trebuchet MS',sans-serif;color:var(--ink);overflow:hidden;background:#e9dcc6}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+/* intro wallpaper */
+#intro{position:fixed;inset:0;background:#f4ead8;z-index:20;display:flex;align-items:center;justify-content:center;transition:opacity .9s;;overflow:hidden}
+#intro.gone{opacity:0;pointer-events:none}
+#intro .it{position:absolute;animation:bob 4s ease-in-out infinite alternate}
+@keyframes bob{to{transform:translateY(8px) rotate(4deg)}}
+#hello{position:relative;background:var(--cream);padding:28px 34px;border-radius:24px;text-align:center;max-width:min(90vw,420px);box-shadow:0 12px 40px #0003}
+#hello h1{font-family:Fraunces,serif;font-size:clamp(2rem,6vw,2.8rem);margin-bottom:8px}
+#hello p{margin-bottom:18px;line-height:1.4}
+.btn{background:var(--pink);padding:12px 24px;border-radius:30px;font-weight:800;box-shadow:0 4px 12px #0002}
+/* pond */
+#pond{position:fixed;inset:0;overflow:hidden;background:
+ radial-gradient(ellipse at 20% 10%,#e6f4ee66,transparent 40%),
+ radial-gradient(ellipse at 80% 60%,#ffffff40,transparent 35%),
+ linear-gradient(160deg,#7fb6b4,#5f9fa4 50%,#79b0ad);animation:water 14s ease-in-out infinite alternate;background-size:140% 140%}
+@keyframes water{to{background-position:30% 40%}}
+#pond:before{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(115deg,transparent 0 80px,#ffffff22 90px,transparent 130px);animation:ripple 18s linear infinite}
+@keyframes ripple{to{transform:translateX(160px)}}
+.fish{position:absolute;left:-120px;animation:swim linear infinite;z-index:1;pointer-events:none}
+@keyframes swim{to{transform:translateX(calc(100vw + 260px))}}
+#wrap{position:relative;z-index:2;height:100%;overflow-y:auto;padding:22px 16px 120px}
+.col{max-width:480px;margin:0 auto}
+.eyebrow{font-size:.7rem;opacity:.7;letter-spacing:.05em}
+h2.title{font-size:1.6rem;font-weight:800;margin:2px 0 6px}
+.sub{font-size:.75rem;opacity:.8;line-height:1.4}
+nav{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 22px}
+nav button{background:#ffffffaa;padding:7px 13px;border-radius:12px;font-size:.8rem;backdrop-filter:blur(4px)}
+nav button.on{background:#c7dccb}
+.hint{font-size:.75rem;margin:70px 0 14px}
+.card{background:var(--cream);border-radius:14px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 14px #0002;scroll-margin-top:12px}
+.card .lab{font-size:.65rem;opacity:.6;margin-bottom:4px}
+.card p{font-size:.92rem;line-height:1.45}
+.bouq{display:flex;justify-content:center;padding:30px 0}
+.pb{position:relative;display:inline-block;cursor:pointer}
+.bubbles{position:relative;height:300px;margin-bottom:10px}
+.bub{position:absolute;width:62px;height:62px;border-radius:50%;border:3px solid #fff;overflow:hidden;box-shadow:0 4px 12px #0003;cursor:pointer;animation:drift 6s ease-in-out infinite alternate;background:#e8c3cf;display:flex;align-items:center;justify-content:center;font-size:.6rem;text-align:center}
+@keyframes drift{to{transform:translate(14px,-18px)}}
+.qbtn{background:#b9d6c8;padding:9px 16px;border-radius:10px;margin-top:10px;font-size:.85rem}
+/* rail + floating */
+#rail{position:fixed;left:14px;bottom:14px;z-index:6;display:flex;align-items:center;gap:10px}
+#heart{width:44px;height:44px;border-radius:50%;background:#6b2a4a;display:flex;align-items:center;justify-content:center}
+#more{background:var(--pink);padding:12px 20px;border-radius:20px;font-weight:800;font-size:.8rem}
+#help{position:fixed;right:14px;bottom:14px;z-index:6;background:var(--deep);color:#fff;padding:12px 18px;border-radius:20px;font-size:.8rem}
+.heartf{position:fixed;bottom:0;z-index:7;pointer-events:none;animation:rise 3s ease-out forwards}
+@keyframes rise{to{transform:translateY(-90vh);opacity:0}}
+#panel{position:fixed;left:14px;bottom:70px;z-index:8;width:min(300px,calc(100vw - 28px));max-height:70vh;background:#1c2630;border-radius:18px;padding:10px;display:none;box-shadow:0 10px 30px #0006;color:#fff;overflow:auto}
+#panel.open{display:block}
+#panel .tabs{display:flex;gap:6px;margin-bottom:10px}
+#panel .tabs button{flex:1;background:#ffffff22;padding:7px;border-radius:10px;font-size:.75rem;color:#fff}
+#panel .tabs button.on{background:#fff;color:#1c2630}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pgrid div{aspect-ratio:3/4;background:#e8c3cf;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#6b2a4a;cursor:pointer;text-align:center}
+.song{display:flex;align-items:center;gap:10px;background:#0f6a73;border-radius:10px;padding:10px;font-size:.8rem}
+.map{margin-top:10px;background:#8a9a8a;border-radius:10px;height:180px;display:flex;align-items:center;justify-content:center;font-size:.75rem}
+/* lightbox */
+#lb{position:fixed;inset:0;z-index:30;background:#0006;backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:20px}
+#lb.open{display:flex}
+.polaroid{background:#f1ebe0;border-radius:18px;padding:12px;width:min(300px,86vw);box-shadow:0 20px 50px #0005}
+.polaroid .img{aspect-ratio:4/3;background:#e8c3cf;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#6b2a4a;font-size:.8rem;overflow:hidden}
+.polaroid .img img{width:100%;height:100%;object-fit:cover}
+.polaroid small{display:block;margin-top:10px;font-size:.65rem;opacity:.7;letter-spacing:.08em}
+.polaroid h3{font-family:Fraunces,serif;color:var(--deep);font-size:1.3rem}
+.polaroid em{font-family:Fraunces,serif;opacity:.7}
+#helpbox{position:fixed;inset:0;z-index:30;background:#0006;display:none;align-items:center;justify-content:center;padding:20px}
+#helpbox.open{display:flex}
+@media(min-width:900px){.col{max-width:520px}#wrap{padding-top:30px}}
+</style></head><body>
+
+<div id="intro">
+ <div id="hello"><h1>For Aya</h1><p>Someone made you a little pond full of things that are yours.</p><button class="btn" id="enter">Open</button></div>
+</div>
+
+<div id="pond"><div id="fishes"></div>
+<div id="wrap"><div class="col">
+ <div class="eyebrow">a shared pond</div>
+ <h2 class="title">Still Pond</h2>
+ <div class="sub">For Aya<br>From Mohamed</div>
+ <nav id="nav">
+  <button data-t="top" class="on">Pond</button><button data-t="note">Letter</button><button data-t="photos">Photos</button><button data-t="bouq">Bouquet</button><button data-t="keep">Keepsakes</button><button data-t="qs">Questions</button>
+ </nav>
+ <div class="bubbles" id="photos"></div>
+ <div class="hint">Drift through the water. Open keepsakes for songs, voice, video, and maps.</div>
+ <div class="card" id="note"><div class="lab">the note</div><p>My love, I packed our photos, a bouquet, a voice note, a memory map, a song, and a video into this one gift. Open every piece slowly. I am in all of it. Always, You</p></div>
+ <div class="card bouq" id="bouq"><svg width="160" height="220" viewBox="0 0 160 220"><g fill="#6e9a62"><ellipse cx="45" cy="75" rx="12" ry="30" transform="rotate(-35 45 75)"/><ellipse cx="115" cy="75" rx="12" ry="30" transform="rotate(35 115 75)"/></g><circle cx="58" cy="62" r="24" fill="#ee8aa5"/><circle cx="102" cy="58" r="22" fill="#f4a3b8"/><circle cx="80" cy="42" r="19" fill="#fff" stroke="#eee"/><circle cx="46" cy="84" r="14" fill="#9a7bd0"/><circle cx="114" cy="86" r="14" fill="#8f6cc8"/><path d="M20 80 L140 80 L90 205 L70 205Z" fill="#c9a06a"/><path d="M20 80 L80 100 L140 80" fill="#dcb682"/><rect x="66" y="140" width="28" height="8" rx="4" fill="#8a5a2b"/></svg></div>
+ <div class="card" id="keep"><div class="lab">keepsakes</div><p>Photos, a voice note, Spotify, YouTube, maps, and video live in the left rail on this pond.</p></div>
+ <div class="card" id="qs"><div class="lab">couple questions</div><div class="lab" id="qn">q1</div><p id="qt"></p><button class="qbtn" id="nq">Next question</button></div>
+</div></div></div>
+
+<div id="panel">
+ <div class="tabs"><button class="on" data-p="ph">Photos</button><button data-p="mu">Song</button><button data-p="mp">Map</button></div>
+ <div id="ph" class="pgrid"></div>
+ <div id="mu" style="display:none"><div class="song"><b>Our song</b><span>(placeholder)</span></div></div>
+ <div id="mp" style="display:none"><div class="map">Memory map (placeholder)</div></div>
+</div>
+<div id="rail"><button id="heart" aria-label="keepsakes"><svg width="22" height="22" viewBox="0 0 24 24"><path fill="#ff8fb1" d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.500-8 11-8 11z"/></svg></button><button id="more">There's more here</button></div>
+<button id="help">Help</button>
+<div id="lb"><div class="polaroid"><div class="img" id="lbimg"></div><small id="lbd"></small><h3 id="lbt"></h3><em id="lbp"></em></div></div>
+<div id="helpbox"><div class="card" style="max-width:340px"><div class="lab">help</div><p>Scroll to read. Tap a floating photo to open it. The heart button opens photos, a song and a map. Tap anywhere outside a card to close it.</p></div></div>
+<audio id="aud" loop></audio>
+
+<script>
+const $=s=>document.querySelector(s);
+const NAME="Aya";
+// data: replace with real photos/captions
+const photos=[
+ {src:"",date:"JULY 18",title:"The night market",place:"Da Nang"},
+ {src:"",date:"DATE",title:"Our moment 2",place:"Place"},
+ {src:"",date:"DATE",title:"Our moment 3",place:"Place"},
+ {src:"",date:"DATE",title:"Our moment 4",place:"Place"},
+ {src:"",date:"DATE",title:"Our moment 5",place:"Place"}];
+const questions=["When did we first feel like we were swimming the same way?","What should I hear when I drift too far from you?","What is one small thing I do that you never want me to stop doing?","Where should we be a year from today?","What song feels like us?"];
+// intro wallpaper (SVG cats, flowers, hearts)
+const cols=['#e9a96a','#6b4a3a','#fff','#8f8a82','#2b2b2b','#f1d3b0'];
+function cat(c,s){return `<svg width="${s}" height="${s}" viewBox="0 0 60 60"><path d="M10 22 L16 4 L28 16Z M50 22 L44 4 L32 16Z" fill="${c}"/><circle cx="30" cy="34" r="22" fill="${c}"/><circle cx="22" cy="32" r="2.5" fill="#222"/><circle cx="38" cy="32" r="2.5" fill="#222"/><path d="M27 39 Q30 42 33 39" stroke="#222" fill="none" stroke-width="1.5"/><circle cx="30" cy="52" r="5" fill="#d33"/></svg>`}
+function flower(s){return `<svg width="${s}" height="${s}" viewBox="0 0 40 40"><g fill="#d4202e"><circle cx="20" cy="9" r="8"/><circle cx="31" cy="20" r="8"/><circle cx="20" cy="31" r="8"/><circle cx="9" cy="20" r="8"/></g><circle cx="20" cy="20" r="5" fill="#f6d36b"/></svg>`}
+function heart(s){return `<svg width="${s}" height="${s}" viewBox="0 0 24 24"><path fill="#d4202e" d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.500-8 11-8 11z"/></svg>`}
+(function(){const n=Math.min(46,Math.floor(innerWidth*innerHeight/14000));let h='';
+ for(let i=0;i<n;i++){const t=i%3,x=Math.random()*95,y=Math.random()*92,d=Math.random()*3;
+  const s=t==0?70+Math.random()*40:t==1?34:26;
+  h+=`<div class="it" style="left:${x}%;top:${y}%;animation-delay:-${d}s">${t==0?cat(cols[i%cols.length],s):t==1?flower(s):heart(s)}</div>`}
+ $('#intro').insertAdjacentHTML('afterbegin',h)})();
+// fish
+(function(){const fc=['#f26a2e','#f5b82e','#4aa3c7','#e86f9a','#fff'];let h='';
+ for(let i=0;i<9;i++){const c=fc[i%fc.length],y=8+Math.random()*80,dur=22+Math.random()*26,del=-Math.random()*40,s=34+Math.random()*34;
+  h+=`<svg class="fish" style="top:${y}%;animation-duration:${dur}s;animation-delay:${del}s" width="${s}" height="${s*.6}" viewBox="0 0 60 36"><path d="M2 18 L16 6 L16 30Z" fill="${c}" opacity=".85"/><ellipse cx="34" cy="18" rx="24" ry="13" fill="${c}"/><circle cx="48" cy="15" r="2.5" fill="#222"/></svg>`}
+ $('#fishes').innerHTML=h})();
+// photo bubbles
+function thumb(p,i){return p.src?`<img src="${p.src}" style="width:100%;height:100%;object-fit:cover" alt="">`:`<span>${i+1}</span>`}
+$('#photos').innerHTML=photos.map((p,i)=>`<div class="bub" data-i="${i}" style="left:${[10,60,30,70,45][i%5]}%;top:${[5,12,45,60,80][i%5]}%;animation-delay:-${i*1.3}s">${thumb(p,i)}</div>`).join('');
+$('#ph').innerHTML=photos.map((p,i)=>`<div data-i="${i}">${p.src?`<img src="${p.src}" style="width:100%;height:100%;object-fit:cover;border-radius:8px">`:'Photo '+(i+1)}</div>`).join('');
+function openPhoto(i){const p=photos[i];$('#lbimg').innerHTML=p.src?`<img src="${p.src}" alt="">`:'Photo placeholder';$('#lbd').textContent=p.date;$('#lbt').textContent=p.title;$('#lbp').textContent=p.place;$('#lb').classList.add('open')}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)openPhoto(+b.dataset.i)});
+$('#lb').onclick=()=>$('#lb').classList.remove('open');
+$('#helpbox').onclick=()=>$('#helpbox').classList.remove('open');
+$('#help').onclick=()=>$('#helpbox').classList.add('open');
+// questions
+let q=0;const showQ=()=>{$('#qn').textContent='q'+(q+1);$('#qt').textContent=questions[q]};showQ();
+$('#nq').onclick=()=>{q=(q+1)%questions.length;showQ()};
+// nav
+$('#nav').onclick=e=>{const t=e.target.dataset.t;if(!t)return;document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b==e.target));
+ if(t=='top')$('#wrap').scrollTo({top:0,behavior:'smooth'});else $('#'+t).scrollIntoView({behavior:'smooth',block:'start'})};
+// rail
+$('#heart').onclick=()=>$('#panel').classList.toggle('open');
+$('#more').onclick=()=>{$('#panel').classList.add('open');for(let i=0;i<14;i++)setTimeout(()=>{const d=document.createElement('div');d.className='heartf';d.style.left=(Math.random()*100)+'vw';d.innerHTML=heart(18+Math.random()*18);document.body.appendChild(d);setTimeout(()=>d.remove(),3200)},i*90)};
+document.querySelectorAll('#panel .tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#panel .tabs button').forEach(x=>x.classList.toggle('on',x==b));['ph','mu','mp'].forEach(id=>$('#'+id).style.display=id==b.dataset.p?'':'none');if(b.dataset.p=='ph')$('#ph').style.display='grid'});
+// enter
+$('#enter').onclick=()=>{$('#intro').classList.add('gone');const a=$('#aud');if(a.src)a.play().catch(()=>{})};
+</script></body></html>
